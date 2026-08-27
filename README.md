@@ -2,8 +2,6 @@
 
 Consulta estratégica de serviços do **Anexo da LC 116/2003 (ISSQN)** com correlação à **Nomenclatura Brasileira de Serviços – NBS 2.0**, incluindo o **local de incidência do ISS**.
 
-Paleta e identidade visual alinhadas ao simulador *IBSCBS-SimplesNacional* (TaxReform).
-
 ---
 
 ## Objetivo

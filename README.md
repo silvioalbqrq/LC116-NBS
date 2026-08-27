@@ -62,14 +62,6 @@ A correlação entre LC 116 e NBS é **heurística** (similaridade de tokens nas
 
 ---
 
-## Contexto da Reforma Tributária
-
-- **Janela de opção do CGSN**: 01 a 30 de setembro de 2026 (efeitos a partir do 1º semestre de 2027).
-- Referências: Resolução CGSN 186/2026 e LC 214/2025.
-- O site é ferramenta de apoio à decisão sobre IBS/CBS no âmbito do Simples Nacional.
-
----
-
 ## Avisos importantes
 
 - Uso **informativo**.
@@ -85,5 +77,3 @@ A correlação entre LC 116 e NBS é **heurística** (similaridade de tokens nas
 - Não requer instalação de dependências nem backend.
 
 ---
-
-*TaxReform | IBSCBS-SimplesNacional*

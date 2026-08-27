@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaxReform | LC 116 × NBS — Local do ISS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0f172a;
+      --navy-light: #1e293b;
+      --slate: #334155;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --green-soft: #ecfdf5;
+      --green: #059669;
+      --green-dark: #047857;
+      --amber: #f59e0b;
+      --amber-soft: #fffbeb;
+      --blue: #3b82f6;
+      --blue-soft: #eff6ff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    header {
+      background: var(--navy);
+      color: #fff;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.35);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .logo-icon {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+    }
+    .badge {
+      background: var(--navy-light);
+      border: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+    .hero {
+      background: var(--navy);
+      color: #fff;
+      text-align: center;
+      padding: 2.25rem 1.25rem 2.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.4rem, 3.8vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.55rem;
+    }
+    .hero p {
+      color: #94a3b8;
+      max-width: 640px;
+      margin: 0 auto 1.1rem;
+      font-size: 0.92rem;
+    }
+    .window-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--amber-soft);
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+    main {
+      max-width: 1100px;
+      margin: -1.35rem auto 2.5rem;
+      padding: 0 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 0.95rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .card-header .icon {
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+    }
+    .icon-lc { background: #fce7f3; color: #be185d; }
+    .icon-nbs { background: #dbeafe; color: #1d4ed8; }
+    .icon-loc { background: #ecfdf5; color: #047857; }
+    .card-body { padding: 1rem 1.2rem; }
+    .search-wrap { position: relative; margin-bottom: 0.75rem; }
+    .search-wrap input {
+      width: 100%;
+      padding: 0.7rem 0.95rem 0.7rem 2.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .search-wrap input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+    .search-wrap .search-icon {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+    .filters {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.65rem;
+    }
+    .chip {
+      font-size: 0.73rem;
+      padding: 0.28rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip:hover, .chip.active {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+    .count { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.45rem; }
+    .results {
+      overflow-y: auto;
+      max-height: 340px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fafafa;
+    }
+    .result-item {
+      padding: 0.7rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .result-item:hover, .result-item.selected { background: #eff6ff; }
+    .result-item.selected { border-left: 3px solid #3b82f6; }
+    .result-code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #1d4ed8;
+      margin-bottom: 0.12rem;
+    }
+    .result-desc { font-size: 0.86rem; color: var(--text); }
+    .result-meta { font-size: 0.7rem; color: var(--muted); margin-top: 0.18rem; }
+    .detail { display: none; }
+    .detail.visible { display: block; }
+    .local-box {
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin-bottom: 1rem;
+      border: 1px solid;
+    }
+    .local-box.geral {
+      background: var(--blue-soft);
+      border-color: #bfdbfe;
+    }
+    .local-box.excecao {
+      background: var(--green-soft);
+      border-color: #a7f3d0;
+    }
+    .local-box.tomador {
+      background: var(--amber-soft);
+      border-color: #fcd34d;
+    }
+    .local-box .label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+    .local-box.geral .label { color: #1d4ed8; }
+    .local-box.excecao .label { color: var(--green); }
+    .local-box.tomador .label { color: #b45309; }
+    .local-box .title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+    .local-box p { font-size: 0.86rem; color: #334155; }
+    .selected-lc {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .selected-lc h3 {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+    .selected-lc .code {
+      font-family: ui-monospace, monospace;
+      font-weight: 600;
+      color: #be185d;
+      font-size: 0.9rem;
+    }
+    .selected-lc .desc { font-size: 0.9rem; margin-top: 0.2rem; }
+    .nbs-matches h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .match-item {
+      padding: 0.7rem 0.85rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .match-item .code {
+      font-family: ui-monospace, monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #1d4ed8;
+    }
+    .match-item .desc { font-size: 0.84rem; margin-top: 0.12rem; }
+    .score {
+      flex-shrink: 0;
+      font-size: 0.7rem;
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 0.18rem 0.5rem;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+    .empty {
+      text-align: center;
+      padding: 1.75rem 1rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1.25rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+    .note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px dashed var(--border);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-icon">📊</div>
+      <span>TaxReform | LC 116 × NBS</span>
+    </div>
+    <span class="badge">Resolução CGSN 186/2026 &amp; LC 214/2025</span>
+  </header>
+
+  <section class="hero">
+    <h1>Consulta LC 116 → Serviços NBS correlatos</h1>
+    <p>Selecione um serviço do Anexo da LC 116/2003 e veja os serviços correlatos na NBS 2.0, além do local de incidência do ISS (estabelecimento prestador, local da prestação ou domicílio do tomador).</p>
+    <div class="window-banner">
+      📅 Janela de Opção do CGSN: 01 a 30 de Setembro de 2026 (Efeito no 1º Semestre de 2027)
+    </div>
+  </section>
+
+  <main>
+    <div class="card">
+      <div class="card-header">
+        <span class="icon icon-lc">L</span>
+        Anexo da LC 116/2003 — Lista de Serviços (ISSQN)
+      </div>
+      <div class="card-body">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="search" id="lcSearch" placeholder="Buscar por código ou descrição (ex: 7.02, construção, informática, planos de saúde...)" autocomplete="off" />
+        </div>
+        <div class="filters" id="lcFilters">
+          <button class="chip active" data-item="">Todos</button>
+          <button class="chip" data-item="1">1 – Informática</button>
+          <button class="chip" data-item="3">3 – Locação / Cessão</button>
+          <button class="chip" data-item="4">4 – Saúde</button>
+          <button class="chip" data-item="5">5 – Veterinária</button>
+          <button class="chip" data-item="7">7 – Engenharia / Obras</button>
+          <button class="chip" data-item="10">10 – Intermediação</button>
+          <button class="chip" data-item="14">14 – Bens de terceiros</button>
+          <button class="chip" data-item="15">15 – Bancário</button>
+          <button class="chip" data-item="17">17 – Apoio</button>
+        </div>
+        <div class="count" id="lcCount">—</div>
+        <div class="results" id="lcResults"></div>
+      </div>
+    </div>
+
+    <div class="card detail" id="detailPanel">
+      <div class="card-header">
+        <span class="icon icon-loc">📍</span>
+        Local de incidência do ISS e correlação NBS
+      </div>
+      <div class="card-body" id="detailContent">
+        <div class="empty">Selecione um item da LC 116 acima para ver o local do ISS e os serviços NBS correlatos.</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Dados: LISTA.SERV.NAC (LC 116/2003, art. 3º) e LISTA.NBS_v2.0 · Correlação por similaridade textual · Uso informativo — confirme sempre a legislação municipal e a RFB
+  </footer>
+
+  <script src="nbs.js"></script>
+  <script src="lc116.js"></script>
+  <script>
+    const NBS = window.NBS_DATA || [];
+    const LC = window.LC116_DATA || [];
+
+    const LOCAL_MAP = {
+      "3.5":  { tipo: "excecao", texto: "Local da instalação dos andaimes, palcos, coberturas e outras estruturas de uso temporário (subitem 3.05)." },
+      "3.05": { tipo: "excecao", texto: "Local da instalação dos andaimes, palcos, coberturas e outras estruturas de uso temporário (subitem 3.05)." },
+      "3.4":  { tipo: "excecao", texto: "Em cada Município em cujo território haja extensão de ferrovia, rodovia, postes, cabos, dutos e condutos (subitem 3.04 — § 1º do art. 3º)." },
+      "3.04": { tipo: "excecao", texto: "Em cada Município em cujo território haja extensão de ferrovia, rodovia, postes, cabos, dutos e condutos (subitem 3.04 — § 1º do art. 3º)." },
+      "7.2":  { tipo: "excecao", texto: "Local da execução da obra (subitens 7.02, 7.19 e 14.14)." },
+      "7.02": { tipo: "excecao", texto: "Local da execução da obra (subitens 7.02, 7.19 e 14.14)." },
+      "7.19": { tipo: "excecao", texto: "Local da execução da obra — acompanhamento e fiscalização (subitem 7.19)." },
+      "14.14":{ tipo: "excecao", texto: "Local da execução (guincho intramunicipal, guindaste e içamento — subitem 14.14)." },
+      "7.4":  { tipo: "excecao", texto: "Local da demolição (subitem 7.04)." },
+      "7.04": { tipo: "excecao", texto: "Local da demolição (subitem 7.04)." },
+      "7.5":  { tipo: "excecao", texto: "Local das edificações em geral, estradas, pontes, portos e congêneres (subitem 7.05)." },
+      "7.05": { tipo: "excecao", texto: "Local das edificações em geral, estradas, pontes, portos e congêneres (subitem 7.05)." },
+      "7.9":  { tipo: "excecao", texto: "Local da execução da varrição, coleta, remoção, tratamento e destinação de lixo e resíduos (subitem 7.09)." },
+      "7.09": { tipo: "excecao", texto: "Local da execução da varrição, coleta, remoção, tratamento e destinação de lixo e resíduos (subitem 7.09)." },
+      "7.10": { tipo: "excecao", texto: "Local da execução da limpeza, manutenção e conservação de vias, logradouros, imóveis, chaminés, piscinas, parques e jardins (subitem 7.10)." },
+      "7.11": { tipo: "excecao", texto: "Local da execução da decoração, jardinagem, corte e poda de árvores (subitem 7.11)." },
+      "7.12": { tipo: "excecao", texto: "Local do controle e tratamento de efluentes e de agentes físicos, químicos e biológicos (subitem 7.12)." },
+      "7.16": { tipo: "excecao", texto: "Local do florestamento, reflorestamento, semeadura, adubação, silvicultura e exploração florestal (subitem 7.16)." },
+      "7.17": { tipo: "excecao", texto: "Local do escoramento e contenção de encostas (subitem 7.17)." },
+      "7.18": { tipo: "excecao", texto: "Local da limpeza e dragagem de rios, portos, canais, baías, lagos, represas e açudes (subitem 7.18)." },
+      "11.2": { tipo: "excecao", texto: "Local da vigilância, segurança ou monitoramento de bens, pessoas e semoventes." },
+      "11.02":{ tipo: "excecao", texto: "Local da vigilância, segurança ou monitoramento de bens, pessoas e semoventes." },
+      "17.5": { tipo: "tomador", texto: "Estabelecimento do tomador da mão-de-obra ou, na falta, o domicílio do tomador (subitem 17.05)." },
+      "17.05":{ tipo: "tomador", texto: "Estabelecimento do tomador da mão-de-obra ou, na falta, o domicílio do tomador (subitem 17.05)." },
+      "17.10":{ tipo: "excecao", texto: "Local da feira, exposição, congresso ou congênere a que se referir o planejamento, organização e administração (subitem 17.10)." },
+      "20.1": { tipo: "excecao", texto: "Local do porto, aeroporto, ferroporto, terminal rodoviário, ferroviário ou metroviário (item 20)." },
+      "20.01":{ tipo: "excecao", texto: "Local do porto, aeroporto, ferroporto, terminal rodoviário, ferroviário ou metroviário (item 20)." },
+      "4.22": { tipo: "tomador", texto: "Domicílio do tomador dos serviços (planos de medicina de grupo ou individual e convênios — subitem 4.22)." },
+      "4.23": { tipo: "tomador", texto: "Domicílio do tomador dos serviços (outros planos de saúde — subitem 4.23)." },
+      "5.9":  { tipo: "tomador", texto: "Domicílio do tomador dos serviços (planos de atendimento e assistência médico-veterinária — subitem 5.09)." },
+      "5.09": { tipo: "tomador", texto: "Domicílio do tomador dos serviços (planos de atendimento e assistência médico-veterinária — subitem 5.09)." },
+      "15.1": { tipo: "tomador", texto: "Domicílio do tomador do serviço (administradoras de cartão de crédito ou débito e demais do subitem 15.01)." },
+      "15.01":{ tipo: "tomador", texto: "Domicílio do tomador do serviço (administradoras de cartão de crédito ou débito e demais do subitem 15.01)." },
+      "15.9": { tipo: "tomador", texto: "Domicílio do tomador do serviço (arrendamento mercantil / leasing — subitem 15.09)." },
+      "15.09":{ tipo: "tomador", texto: "Domicílio do tomador do serviço (arrendamento mercantil / leasing — subitem 15.09)." }
+    };
+
+    function norm(s) {
+      return (s || '').toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9.\s]/g, ' ')
+        .replace(/\s+/g, ' ').trim();
+    }
+    function tokens(s) {
+      return norm(s).split(' ').filter(t => t.length > 2);
+    }
+    function similarity(a, b) {
+      const ta = new Set(tokens(a));
+      const tb = new Set(tokens(b));
+      if (!ta.size || !tb.size) return 0;
+      let inter = 0;
+      for (const t of ta) if (tb.has(t)) inter++;
+      return inter / (ta.size + tb.size - inter);
+    }
+
+    function getLocalRule(item) {
+      const candidates = [
+        item.item + '.' + item.subitem,
+        item.item + '.' + String(item.subitem).padStart(2, '0'),
+        item.item + '.' + String(parseInt(item.subitem, 10) || item.subitem)
+      ];
+      for (const k of candidates) {
+        if (LOCAL_MAP[k]) return LOCAL_MAP[k];
+      }
+      return {
+        tipo: "geral",
+        texto: "Regra geral (art. 3º, caput, LC 116/2003): o serviço considera-se prestado e o imposto é devido no local do estabelecimento prestador ou, na falta deste, no local do domicílio do prestador."
+      };
+    }
+
+    let lcItemFilter = '';
+    let selectedLc = null;
+
+    function filterLc(q, itemFilter) {
+      const nq = norm(q);
+      return LC.filter(item => {
+        if (itemFilter && String(item.item) !== String(itemFilter)) return false;
+        if (!nq) return true;
+        const code = (item.codigo || '') + '';
+        return norm(code).includes(nq) ||
+               norm(item.descricao).includes(nq) ||
+               norm(item.item + '.' + item.subitem).includes(nq) ||
+               norm(item.item + '.' + String(item.subitem).padStart(2,'0')).includes(nq);
+      }).slice(0, 250);
+    }
+
+    function renderLc() {
+      const q = document.getElementById('lcSearch').value;
+      const list = filterLc(q, lcItemFilter);
+      document.getElementById('lcCount').textContent = list.length + ' de ' + LC.length + ' itens';
+      const el = document.getElementById('lcResults');
+      if (!list.length) {
+        el.innerHTML = '<div class="empty">Nenhum resultado</div>';
+        return;
+      }
+      el.innerHTML = list.map(item => {
+        const code = item.codigo || (item.item + '.' + String(item.subitem).padStart(2,'0') + (item.desdobro && item.desdobro !== '0' ? '.' + item.desdobro : ''));
+        const key = item.codigo || (item.item + '-' + item.subitem + '-' + item.desdobro);
+        const isSel = selectedLc && (
+          (selectedLc.codigo && selectedLc.codigo === item.codigo) ||
+          (selectedLc.item === item.item && selectedLc.subitem === item.subitem && selectedLc.desdobro === item.desdobro)
+        );
+        return '<div class="result-item ' + (isSel ? 'selected' : '') + '" data-key="' + key + '">' +
+          '<div class="result-code">' + (code || '—') + '</div>' +
+          '<div class="result-desc">' + item.descricao + '</div>' +
+          '<div class="result-meta">Item ' + item.item + ' · Subitem ' + item.subitem + (item.desdobro && item.desdobro !== '0' ? ' · Desdobro ' + item.desdobro : '') + '</div></div>';
+      }).join('');
+      el.querySelectorAll('.result-item').forEach(node => {
+        node.addEventListener('click', () => {
+          const key = node.dataset.key;
+          selectedLc = LC.find(x => (x.codigo || (x.item + '-' + x.subitem + '-' + x.desdobro)) === key);
+          renderLc();
+          showDetail(selectedLc);
+        });
+      });
+    }
+
+    function showDetail(lc) {
+      const panel = document.getElementById('detailPanel');
+      const content = document.getElementById('detailContent');
+      panel.classList.add('visible');
+
+      const code = lc.codigo || (lc.item + '.' + String(lc.subitem).padStart(2,'0') + (lc.desdobro && lc.desdobro !== '0' ? '.' + lc.desdobro : ''));
+      const rule = getLocalRule(lc);
+
+      let boxClass = 'geral';
+      let boxLabel = 'Regra geral — Local do estabelecimento prestador';
+      let boxTitle = 'Estabelecimento do prestador';
+      if (rule.tipo === 'excecao') {
+        boxClass = 'excecao';
+        boxLabel = 'Exceção — Local da prestação / execução do serviço';
+        boxTitle = 'Local da prestação do serviço';
+      } else if (rule.tipo === 'tomador') {
+        boxClass = 'tomador';
+        boxLabel = 'Exceção — Local do tomador (domicílio / estabelecimento)';
+        boxTitle = 'Domicílio / estabelecimento do tomador';
+      }
+
+      const scores = NBS.map(nbs => ({
+        nbs: nbs,
+        score: similarity(lc.descricao, nbs.descricao)
+      })).filter(x => x.score > 0.10)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 12);
+
+      let matchesHtml = '';
+      if (scores.length) {
+        matchesHtml = scores.map(function(s) {
+          return '<div class="match-item"><div><div class="code">' + s.nbs.codigo + '</div><div class="desc">' + s.nbs.descricao + '</div></div><span class="score">' + Math.round(s.score * 100) + '%</span></div>';
+        }).join('');
+      } else {
+        matchesHtml = '<div class="empty">Nenhuma correlação textual forte encontrada. Refine a busca ou consulte a tabela oficial de correspondência.</div>';
+      }
+
+      content.innerHTML =
+        '<div class="selected-lc"><h3>Serviço selecionado (LC 116)</h3>' +
+        '<div class="code">' + code + '</div><div class="desc">' + lc.descricao + '</div>' +
+        '<div class="result-meta" style="margin-top:0.3rem">Item ' + lc.item + ' · Subitem ' + lc.subitem + (lc.desdobro && lc.desdobro !== '0' ? ' · Desdobro ' + lc.desdobro : '') + '</div></div>' +
+        '<div class="local-box ' + boxClass + '"><div class="label">' + boxLabel + '</div><div class="title">' + boxTitle + '</div><p>' + rule.texto + '</p></div>' +
+        '<div class="nbs-matches"><h3><span class="icon icon-nbs" style="display:inline-grid;width:20px;height:20px;font-size:11px;border-radius:5px">N</span> Serviços correlatos na NBS 2.0</h3>' + matchesHtml + '</div>' +
+        '<div class="note"><strong>Nota:</strong> A correlação NBS é heurística (similaridade de descrição). O local de incidência segue o art. 3º da LC 116/2003 (alterações pelas LC 157/2016, LC 175/2020 e LC 218/2025). Em caso de dúvida, verifique a legislação municipal e orientações da RFB / CGSN.</div>';
+
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    document.getElementById('lcSearch').addEventListener('input', function() { renderLc(); });
+    document.getElementById('lcFilters').addEventListener('click', function(e) {
+      const btn = e.target.closest('.chip');
+      if (!btn) return;
+      document.querySelectorAll('#lcFilters .chip').forEach(function(c) { c.classList.remove('active'); });
+      btn.classList.add('active');
+      lcItemFilter = btn.dataset.item || '';
+      renderLc();
+    });
+
+    renderLc();
+  </script>
+</body>
+</html>

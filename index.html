@@ -90,18 +90,6 @@
       margin: 0 auto 1.1rem;
       font-size: 0.92rem;
     }
-    .window-banner {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--amber-soft);
-      color: #92400e;
-      border: 1px solid #fcd34d;
-      padding: 0.4rem 1rem;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 500;
-    }
     main {
       max-width: 1100px;
       margin: -1.35rem auto 2.5rem;
@@ -318,6 +306,78 @@
       padding-top: 0.65rem;
       border-top: 1px dashed var(--border);
     }
+    .inciso-badge {
+      display: inline-block;
+      margin-left: 0.4rem;
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      font-size: 0.64rem;
+      font-weight: 600;
+      padding: 0.06rem 0.4rem;
+      border-radius: 999px;
+      vertical-align: middle;
+    }
+    .pill {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 600;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      margin-left: 0.3rem;
+      vertical-align: middle;
+    }
+    .pill-s { background: #dcfce7; color: #166534; }
+    .pill-a { background: #fef3c7; color: #92400e; }
+    .pill-code { background: #dbeafe; color: #1e40af; font-family: ui-monospace, monospace; }
+    .local-box .base {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      border-top: 1px dashed currentColor;
+      padding-top: 0.4rem;
+    }
+    .ibs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin: 0.75rem 0 0.5rem;
+    }
+    .ibs-box {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      background: #f8fafc;
+    }
+    .ibs-box h4 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 0.45rem;
+      color: var(--navy-light);
+    }
+    .ibs-box ul {
+      font-size: 0.78rem;
+      color: #334155;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .ibs-box li {
+      padding: 0.22rem 0;
+      border-bottom: 1px dashed var(--border);
+    }
+    .ibs-box li:last-child { border-bottom: none; }
+    .mono { font-family: ui-monospace, monospace; font-weight: 600; color: #1e40af; }
+    .correl-origem {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 0.55rem;
+    }
+    .desdros {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
   </style>
 </head>
 <body>
@@ -330,11 +390,8 @@
   </header>
 
   <section class="hero">
-    <h1>Consulta LC 116 → Serviços NBS correlatos</h1>
-    <p>Selecione um serviço do Anexo da LC 116/2003 e veja os serviços correlatos na NBS 2.0, além do local de incidência do ISS (estabelecimento prestador, local da prestação ou domicílio do tomador).</p>
-    <div class="window-banner">
-      📅 Janela de Opção do CGSN: 01 a 30 de Setembro de 2026 (Efeito no 1º Semestre de 2027)
-    </div>
+    <h1>Consulta LC 116 → Serviços NBS (Anexo VIII) e local do ISS</h1>
+    <p>Selecione um serviço do Anexo da LC 116/2003 e veja a correlação oficial de serviços NBS (Anexo VIII — IBSCBS), além do local de incidência do ISS (art. 3º da LC 116) e do local IBS/CBS da reforma tributária.</p>
   </section>
 
   <main>
@@ -368,7 +425,7 @@
     <div class="card detail" id="detailPanel">
       <div class="card-header">
         <span class="icon icon-loc">📍</span>
-        Local de incidência do ISS e correlação NBS
+        Local do ISS (art. 3º LC 116) e correlação NBS (Anexo VIII)
       </div>
       <div class="card-body" id="detailContent">
         <div class="empty">Selecione um item da LC 116 acima para ver o local do ISS e os serviços NBS correlatos.</div>
@@ -377,192 +434,13 @@
   </main>
 
   <footer>
-    Dados: LISTA.SERV.NAC (LC 116/2003, art. 3º) e LISTA.NBS_v2.0 · Correlação por similaridade textual · Uso informativo — confirme sempre a legislação municipal e a RFB
+    Dados: LISTA.SERV.NAC (LC 116/2003), correlação NBS oficial (Anexo VIII — IBSCBS V1.00.00) · Local do ISS conforme art. 3º da LC 116/2003 (alterações LC 157/2016, LC 175/2020, LC 183/2021, LC 218/2025) · Uso informativo — confirme sempre a legislação municipal e a RFB
   </footer>
 
   <script src="nbs.js"></script>
   <script src="lc116.js"></script>
-  <script>
-    const NBS = window.NBS_DATA || [];
-    const LC = window.LC116_DATA || [];
-
-    const LOCAL_MAP = {
-      "3.5":  { tipo: "excecao", texto: "Local da instalação dos andaimes, palcos, coberturas e outras estruturas de uso temporário (subitem 3.05)." },
-      "3.05": { tipo: "excecao", texto: "Local da instalação dos andaimes, palcos, coberturas e outras estruturas de uso temporário (subitem 3.05)." },
-      "3.4":  { tipo: "excecao", texto: "Em cada Município em cujo território haja extensão de ferrovia, rodovia, postes, cabos, dutos e condutos (subitem 3.04 — § 1º do art. 3º)." },
-      "3.04": { tipo: "excecao", texto: "Em cada Município em cujo território haja extensão de ferrovia, rodovia, postes, cabos, dutos e condutos (subitem 3.04 — § 1º do art. 3º)." },
-      "7.2":  { tipo: "excecao", texto: "Local da execução da obra (subitens 7.02, 7.19 e 14.14)." },
-      "7.02": { tipo: "excecao", texto: "Local da execução da obra (subitens 7.02, 7.19 e 14.14)." },
-      "7.19": { tipo: "excecao", texto: "Local da execução da obra — acompanhamento e fiscalização (subitem 7.19)." },
-      "14.14":{ tipo: "excecao", texto: "Local da execução (guincho intramunicipal, guindaste e içamento — subitem 14.14)." },
-      "7.4":  { tipo: "excecao", texto: "Local da demolição (subitem 7.04)." },
-      "7.04": { tipo: "excecao", texto: "Local da demolição (subitem 7.04)." },
-      "7.5":  { tipo: "excecao", texto: "Local das edificações em geral, estradas, pontes, portos e congêneres (subitem 7.05)." },
-      "7.05": { tipo: "excecao", texto: "Local das edificações em geral, estradas, pontes, portos e congêneres (subitem 7.05)." },
-      "7.9":  { tipo: "excecao", texto: "Local da execução da varrição, coleta, remoção, tratamento e destinação de lixo e resíduos (subitem 7.09)." },
-      "7.09": { tipo: "excecao", texto: "Local da execução da varrição, coleta, remoção, tratamento e destinação de lixo e resíduos (subitem 7.09)." },
-      "7.10": { tipo: "excecao", texto: "Local da execução da limpeza, manutenção e conservação de vias, logradouros, imóveis, chaminés, piscinas, parques e jardins (subitem 7.10)." },
-      "7.11": { tipo: "excecao", texto: "Local da execução da decoração, jardinagem, corte e poda de árvores (subitem 7.11)." },
-      "7.12": { tipo: "excecao", texto: "Local do controle e tratamento de efluentes e de agentes físicos, químicos e biológicos (subitem 7.12)." },
-      "7.16": { tipo: "excecao", texto: "Local do florestamento, reflorestamento, semeadura, adubação, silvicultura e exploração florestal (subitem 7.16)." },
-      "7.17": { tipo: "excecao", texto: "Local do escoramento e contenção de encostas (subitem 7.17)." },
-      "7.18": { tipo: "excecao", texto: "Local da limpeza e dragagem de rios, portos, canais, baías, lagos, represas e açudes (subitem 7.18)." },
-      "11.2": { tipo: "excecao", texto: "Local da vigilância, segurança ou monitoramento de bens, pessoas e semoventes." },
-      "11.02":{ tipo: "excecao", texto: "Local da vigilância, segurança ou monitoramento de bens, pessoas e semoventes." },
-      "17.5": { tipo: "tomador", texto: "Estabelecimento do tomador da mão-de-obra ou, na falta, o domicílio do tomador (subitem 17.05)." },
-      "17.05":{ tipo: "tomador", texto: "Estabelecimento do tomador da mão-de-obra ou, na falta, o domicílio do tomador (subitem 17.05)." },
-      "17.10":{ tipo: "excecao", texto: "Local da feira, exposição, congresso ou congênere a que se referir o planejamento, organização e administração (subitem 17.10)." },
-      "20.1": { tipo: "excecao", texto: "Local do porto, aeroporto, ferroporto, terminal rodoviário, ferroviário ou metroviário (item 20)." },
-      "20.01":{ tipo: "excecao", texto: "Local do porto, aeroporto, ferroporto, terminal rodoviário, ferroviário ou metroviário (item 20)." },
-      "4.22": { tipo: "tomador", texto: "Domicílio do tomador dos serviços (planos de medicina de grupo ou individual e convênios — subitem 4.22)." },
-      "4.23": { tipo: "tomador", texto: "Domicílio do tomador dos serviços (outros planos de saúde — subitem 4.23)." },
-      "5.9":  { tipo: "tomador", texto: "Domicílio do tomador dos serviços (planos de atendimento e assistência médico-veterinária — subitem 5.09)." },
-      "5.09": { tipo: "tomador", texto: "Domicílio do tomador dos serviços (planos de atendimento e assistência médico-veterinária — subitem 5.09)." },
-      "15.1": { tipo: "tomador", texto: "Domicílio do tomador do serviço (administradoras de cartão de crédito ou débito e demais do subitem 15.01)." },
-      "15.01":{ tipo: "tomador", texto: "Domicílio do tomador do serviço (administradoras de cartão de crédito ou débito e demais do subitem 15.01)." },
-      "15.9": { tipo: "tomador", texto: "Domicílio do tomador do serviço (arrendamento mercantil / leasing — subitem 15.09)." },
-      "15.09":{ tipo: "tomador", texto: "Domicílio do tomador do serviço (arrendamento mercantil / leasing — subitem 15.09)." }
-    };
-
-    function norm(s) {
-      return (s || '').toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9.\s]/g, ' ')
-        .replace(/\s+/g, ' ').trim();
-    }
-    function tokens(s) {
-      return norm(s).split(' ').filter(t => t.length > 2);
-    }
-    function similarity(a, b) {
-      const ta = new Set(tokens(a));
-      const tb = new Set(tokens(b));
-      if (!ta.size || !tb.size) return 0;
-      let inter = 0;
-      for (const t of ta) if (tb.has(t)) inter++;
-      return inter / (ta.size + tb.size - inter);
-    }
-
-    function getLocalRule(item) {
-      const candidates = [
-        item.item + '.' + item.subitem,
-        item.item + '.' + String(item.subitem).padStart(2, '0'),
-        item.item + '.' + String(parseInt(item.subitem, 10) || item.subitem)
-      ];
-      for (const k of candidates) {
-        if (LOCAL_MAP[k]) return LOCAL_MAP[k];
-      }
-      return {
-        tipo: "geral",
-        texto: "Regra geral (art. 3º, caput, LC 116/2003): o serviço considera-se prestado e o imposto é devido no local do estabelecimento prestador ou, na falta deste, no local do domicílio do prestador."
-      };
-    }
-
-    let lcItemFilter = '';
-    let selectedLc = null;
-
-    function filterLc(q, itemFilter) {
-      const nq = norm(q);
-      return LC.filter(item => {
-        if (itemFilter && String(item.item) !== String(itemFilter)) return false;
-        if (!nq) return true;
-        const code = (item.codigo || '') + '';
-        return norm(code).includes(nq) ||
-               norm(item.descricao).includes(nq) ||
-               norm(item.item + '.' + item.subitem).includes(nq) ||
-               norm(item.item + '.' + String(item.subitem).padStart(2,'0')).includes(nq);
-      }).slice(0, 250);
-    }
-
-    function renderLc() {
-      const q = document.getElementById('lcSearch').value;
-      const list = filterLc(q, lcItemFilter);
-      document.getElementById('lcCount').textContent = list.length + ' de ' + LC.length + ' itens';
-      const el = document.getElementById('lcResults');
-      if (!list.length) {
-        el.innerHTML = '<div class="empty">Nenhum resultado</div>';
-        return;
-      }
-      el.innerHTML = list.map(item => {
-        const code = item.codigo || (item.item + '.' + String(item.subitem).padStart(2,'0') + (item.desdobro && item.desdobro !== '0' ? '.' + item.desdobro : ''));
-        const key = item.codigo || (item.item + '-' + item.subitem + '-' + item.desdobro);
-        const isSel = selectedLc && (
-          (selectedLc.codigo && selectedLc.codigo === item.codigo) ||
-          (selectedLc.item === item.item && selectedLc.subitem === item.subitem && selectedLc.desdobro === item.desdobro)
-        );
-        return '<div class="result-item ' + (isSel ? 'selected' : '') + '" data-key="' + key + '">' +
-          '<div class="result-code">' + (code || '—') + '</div>' +
-          '<div class="result-desc">' + item.descricao + '</div>' +
-          '<div class="result-meta">Item ' + item.item + ' · Subitem ' + item.subitem + (item.desdobro && item.desdobro !== '0' ? ' · Desdobro ' + item.desdobro : '') + '</div></div>';
-      }).join('');
-      el.querySelectorAll('.result-item').forEach(node => {
-        node.addEventListener('click', () => {
-          const key = node.dataset.key;
-          selectedLc = LC.find(x => (x.codigo || (x.item + '-' + x.subitem + '-' + x.desdobro)) === key);
-          renderLc();
-          showDetail(selectedLc);
-        });
-      });
-    }
-
-    function showDetail(lc) {
-      const panel = document.getElementById('detailPanel');
-      const content = document.getElementById('detailContent');
-      panel.classList.add('visible');
-
-      const code = lc.codigo || (lc.item + '.' + String(lc.subitem).padStart(2,'0') + (lc.desdobro && lc.desdobro !== '0' ? '.' + lc.desdobro : ''));
-      const rule = getLocalRule(lc);
-
-      let boxClass = 'geral';
-      let boxLabel = 'Regra geral — Local do estabelecimento prestador';
-      let boxTitle = 'Estabelecimento do prestador';
-      if (rule.tipo === 'excecao') {
-        boxClass = 'excecao';
-        boxLabel = 'Exceção — Local da prestação / execução do serviço';
-        boxTitle = 'Local da prestação do serviço';
-      } else if (rule.tipo === 'tomador') {
-        boxClass = 'tomador';
-        boxLabel = 'Exceção — Local do tomador (domicílio / estabelecimento)';
-        boxTitle = 'Domicílio / estabelecimento do tomador';
-      }
-
-      const scores = NBS.map(nbs => ({
-        nbs: nbs,
-        score: similarity(lc.descricao, nbs.descricao)
-      })).filter(x => x.score > 0.10)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 12);
-
-      let matchesHtml = '';
-      if (scores.length) {
-        matchesHtml = scores.map(function(s) {
-          return '<div class="match-item"><div><div class="code">' + s.nbs.codigo + '</div><div class="desc">' + s.nbs.descricao + '</div></div><span class="score">' + Math.round(s.score * 100) + '%</span></div>';
-        }).join('');
-      } else {
-        matchesHtml = '<div class="empty">Nenhuma correlação textual forte encontrada. Refine a busca ou consulte a tabela oficial de correspondência.</div>';
-      }
-
-      content.innerHTML =
-        '<div class="selected-lc"><h3>Serviço selecionado (LC 116)</h3>' +
-        '<div class="code">' + code + '</div><div class="desc">' + lc.descricao + '</div>' +
-        '<div class="result-meta" style="margin-top:0.3rem">Item ' + lc.item + ' · Subitem ' + lc.subitem + (lc.desdobro && lc.desdobro !== '0' ? ' · Desdobro ' + lc.desdobro : '') + '</div></div>' +
-        '<div class="local-box ' + boxClass + '"><div class="label">' + boxLabel + '</div><div class="title">' + boxTitle + '</div><p>' + rule.texto + '</p></div>' +
-        '<div class="nbs-matches"><h3><span class="icon icon-nbs" style="display:inline-grid;width:20px;height:20px;font-size:11px;border-radius:5px">N</span> Serviços correlatos na NBS 2.0</h3>' + matchesHtml + '</div>' +
-        '<div class="note"><strong>Nota:</strong> A correlação NBS é heurística (similaridade de descrição). O local de incidência segue o art. 3º da LC 116/2003 (alterações pelas LC 157/2016, LC 175/2020 e LC 218/2025). Em caso de dúvida, verifique a legislação municipal e orientações da RFB / CGSN.</div>';
-
-      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    document.getElementById('lcSearch').addEventListener('input', function() { renderLc(); });
-    document.getElementById('lcFilters').addEventListener('click', function(e) {
-      const btn = e.target.closest('.chip');
-      if (!btn) return;
-      document.querySelectorAll('#lcFilters .chip').forEach(function(c) { c.classList.remove('active'); });
-      btn.classList.add('active');
-      lcItemFilter = btn.dataset.item || '';
-      renderLc();
-    });
-
-    renderLc();
-  </script>
+  <script src="correlacao.js"></script>
+  <script src="local_map.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

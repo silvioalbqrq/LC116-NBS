@@ -378,6 +378,31 @@
       color: var(--muted);
       margin-top: 0.4rem;
     }
+    .trib-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.12rem 0.5rem;
+      border-radius: 999px;
+      margin: 0.15rem 0.25rem 0 0;
+      border: 1px solid;
+    }
+    .trib-integral { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+    .trib-reduzida { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
+    .trib-zero { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
+    .trib-outra { background: #e0e7ff; color: #3730a3; border-color: #c7d2fe; }
+    .trib-inferida {
+      font-size: 0.64rem;
+      background: #fff;
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      border-radius: 999px;
+      padding: 0.1rem 0.45rem;
+      margin-left: 0.3rem;
+    }
+    .cct-table { width: 100%; border-collapse: collapse; font-size: 0.76rem; margin-top: 0.4rem; }
+    .cct-table th, .cct-table td { text-align: left; padding: 0.35rem 0.45rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .cct-table th { color: var(--muted); font-weight: 600; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.03em; }
   </style>
 </head>
 <body>
@@ -440,7 +465,9 @@
   <script src="nbs.js"></script>
   <script src="lc116.js"></script>
   <script src="correlacao.js"></script>
+  <script src="correlacao_patch.js"></script>
   <script src="local_map.js"></script>
+  <script src="cclasstrib.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

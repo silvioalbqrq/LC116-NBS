@@ -33,6 +33,73 @@
       .replace(/"/g, '&quot;');
   }
 
+  // ---------- Tributação IBS/CBS por cClassTrib (LC 214/2025) ----------
+  var CCLASSTRIB = window.CCLASSTRIB || {};
+  var NBS_FALLBACK = window.NBS_CCLASS_FALLBACK || {};
+
+  function normCClass(k) {
+    var s = String(k == null ? '' : k).trim();
+    if (!s) return '';
+    s = s.replace(/\.0+$/, '');
+    var m = s.match(/(\d+)/);
+    if (m) return m[1].replace(/^0+(\d)/, '$1').padStart(6, '0').slice(-6);
+    return s;
+  }
+
+  function tribInfo(code) {
+    var nk = normCClass(code);
+    return CCLASSTRIB[nk] || CCLASSTRIB[String(code)] || null;
+  }
+
+  function tribBadge(code, inferida) {
+    var info = tribInfo(code);
+    var nk = normCClass(code);
+    var label, cls;
+    if (!info) {
+      label = nk + ' · sem tabela cClassTrib';
+      cls = 'trib-outra';
+    } else if (info.pRedIBS >= 100 && info.pRedCBS >= 100) {
+      label = nk + ' · alíquota zero';
+      cls = 'trib-zero';
+    } else if (info.pRedIBS > 0 || info.pRedCBS > 0) {
+      label = nk + ' · redução ' + info.pRedIBS + '% IBS / ' + info.pRedCBS + '% CBS';
+      cls = 'trib-reduzida';
+    } else if (/^4|^51|^55|^62|^8/.test(info.cst)) {
+      label = nk + ' · ' + info.descCST;
+      cls = 'trib-outra';
+    } else {
+      label = nk + ' · integral';
+      cls = 'trib-integral';
+    }
+    return '<span class="trib-badge ' + cls + '">' + esc(label) + '</span>' +
+      (inferida ? '<span class="trib-inferida">inferida p/ NBS (Anexo III saúde) — confirmar</span>' : '');
+  }
+
+  function efetivaStr(info) {
+    if (!info) return '—';
+    if (info.pRedIBS >= 100 && info.pRedCBS >= 100) return '0% (zero)';
+    if (!info.pRedIBS && !info.pRedCBS) return '100% da referência';
+    return (100 - info.pRedIBS) + '% da ref. IBS / ' + (100 - info.pRedCBS) + '% da ref. CBS';
+  }
+
+  // cClass efetivas de um NBS: próprias do Anexo VIII (correlacao.js + patch de células mescladas).
+  // O Anexo VIII traz a cClass em células mescladas por grupo (ex.: 200029 nas linhas 125–254 da saúde);
+  // o correlacao_patch.js preenche esses valores. O fallback abaixo é só rede de segurança.
+  function cClassEfetivas(nbsCode, entry) {
+    var out = {};
+    Object.keys(entry.cClassTrib || {}).forEach(function (k) {
+      out[normCClass(k)] = { nome: entry.cClassTrib[k], inferida: false };
+    });
+    if (!Object.keys(out).length && NBS_FALLBACK[nbsCode]) {
+      NBS_FALLBACK[nbsCode].forEach(function (k) {
+        var nk = normCClass(k);
+        var info = tribInfo(nk);
+        out[nk] = { nome: info ? info.nome : 'Fallback Anexo III — saúde humana', inferida: true };
+      });
+    }
+    return out;
+  }
+
   // Filtro por item (apenas subitens reais, ignorando headers "item.00")
   let lcItemFilter = '';
   let q = '';
@@ -143,9 +210,15 @@
         const e = corr.nbs[n];
         const badgePS = e.psOnerosa === 'S' ? '<span class="pill pill-s">Serv. oneroso</span>' : '';
         const badgeADQ = e.adqExterior === 'S' ? '<span class="pill pill-a">Adq. exterior</span>' : '';
+        const eff = cClassEfetivas(n, e);
+        const keys = Object.keys(eff);
+        const tribHtml = keys.length
+          ? keys.map(function (k) { return tribBadge(k, eff[k].inferida); }).join('')
+          : '<span class="trib-badge trib-outra">sem cClass no Anexo VIII — verificar enquadramento</span>';
         return '<div class="match-item">' +
           '<div><div class="code">' + esc(n) + ' ' + badgePS + badgeADQ + '</div>' +
-          '<div class="desc">' + esc(e.descricao || '') + '</div></div>' +
+          '<div class="desc">' + esc(e.descricao || '') + '</div>' +
+          '<div style="margin-top:0.3rem;">' + tribHtml + '</div></div>' +
           '</div>';
       }).join('');
 
@@ -161,8 +234,11 @@
       const cctribs = {};
       codes.forEach(function (n) {
         const e = corr.nbs[n];
-        Object.keys(e.cClassTrib || {}).forEach(function (k) {
-          cctribs[k] = e.cClassTrib[k];
+        const eff = cClassEfetivas(n, e);
+        Object.keys(eff).forEach(function (k) {
+          var nk = normCClass(k);
+          if (!cctribs[nk]) cctribs[nk] = { nome: eff[k].nome, inferida: eff[k].inferida, nbs: [] };
+          if (cctribs[nk].nbs.indexOf(n) < 0) cctribs[nk].nbs.push(n);
         });
       });
 
@@ -171,15 +247,26 @@
       }).join('');
       if (!locaisHtml) locaisHtml = '<li>Sem local IBS informado no Anexo VIII.</li>';
 
-      let cctHtml = Object.keys(cctribs).map(function (k) {
-        return '<li><span class="mono">' + esc(k) + '</span> — ' + esc(cctribs[k] || '') + '</li>';
+      let cctHtml = Object.keys(cctribs).sort().map(function (k) {
+        var info = tribInfo(k);
+        var nome = (cctribs[k] && cctribs[k].nome) || (info && info.nome) || '';
+        var cst = info ? ('CST ' + info.cst + ' — ' + info.descCST) : 'sem tabela cClassTrib';
+        var red = info ? ('-' + info.pRedIBS + '% IBS / -' + info.pRedCBS + '% CBS') : '—';
+        var ef = efetivaStr(info);
+        var inf = cctribs[k].inferida ? ' <span class="trib-inferida">inferida</span>' : '';
+        var nbsList = '<br><small style="color:var(--muted);">' + cctribs[k].nbs.map(esc).join(', ') + '</small>';
+        return '<tr><td><span class="mono">' + esc(k) + '</span>' + inf + nbsList + '</td>' +
+          '<td>' + esc(nome) + '<br><small style="color:var(--muted);">' + esc(cst) + '</small></td>' +
+          '<td>' + esc(red) + '<br><small style="color:var(--muted);">' + esc(ef) + '</small></td></tr>';
       }).join('');
       if (!cctHtml) cctHtml = '<li>Sem classificação tributária informada.</li>';
+      else cctHtml = '<table class="cct-table"><thead><tr><th>cClassTrib</th><th>Enquadramento / CST</th><th>IBS / CBS</th></tr></thead><tbody>' + cctHtml + '</tbody></table>';
 
       ibsHtml =
         '<div class="ibs-grid">' +
         '<div class="ibs-box"><h4>🌐 Local incidência IBS (Anexo VIII)</h4><ul>' + locaisHtml + '</ul></div>' +
-        '<div class="ibs-box"><h4>🏷️ Classificação cClassTrib (IBSCBS)</h4><ul>' + cctHtml + '</ul></div>' +
+        '<div class="ibs-box" style="grid-column: 1 / -1;"><h4>🏷️ Tributação IBS/CBS por cClassTrib (LC 214/2025)</h4>' + cctHtml +
+        '<div class="note" style="border:none;padding:0.4rem 0 0;margin:0.4rem 0 0;">Ex.: 200029 = saúde (Anexo III) com redução de 60% → alíquota efetiva de 40% da referência. 000001 = integral (100%). Fonte: cClassTrib 2026-06-22.</div></div>' +
         '</div>';
     } else {
       nbsHtml = '<div class="empty">Nenhuma correlação oficial no Anexo VIII para este subitem.</div>';
@@ -190,7 +277,7 @@
       desdros.map(function (d) { return '<span class="pill pill-code">' + esc(d.codigo.replace(/\.0$/, '')) + '</span>'; }).join(' ') +
       '</div>' : '';
 
-    const corrInfo = corr ? '<div class="correl-origem">📄 Correlação oficial — Anexo VIII (Resolução/Base IBSCBS V1.00.00), ' + Object.keys(corr.nbs).length + ' códigos NBS.</div>' : '';
+    const corrInfo = corr ? '<div class="correl-origem">📄 Correlação oficial — Anexo VIII (Resolução/Base IBSCBS V1.00.00), ' + Object.keys(corr.nbs).length + ' códigos NBS. cClassTrib por NBS (células mescladas preenchidas) + tabela cClassTrib 2026-06-22.</div>' : '';
 
     document.getElementById('detailContent').innerHTML =
       '<div class="selected-lc">' +

@@ -4,15 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TaxReform | LC 116 × NBS — Local do ISS</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --navy: #0f172a;
-      --navy-light: #1e293b;
+      --navy: #0f2a44;
+      --navy2: #1a3a5c;
+      --navy-light: #1a3a5c;
+      --gold: #c9a227;
+      --gold-2: #a8861b;
+      --goldbg: #faf5e8;
       --slate: #334155;
-      --bg: #f8fafc;
+      --bg: #f4f2ec;
       --card: #ffffff;
       --green-soft: #ecfdf5;
       --green: #059669;
@@ -21,19 +22,22 @@
       --amber-soft: #fffbeb;
       --blue: #3b82f6;
       --blue-soft: #eff6ff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --radius: 12px;
+      --text: #1e2a38;
+      --muted: #5d6e80;
+      --border: #dce4ec;
+      --radius: 14px;
+      --shadow: 0 8px 24px rgba(15, 42, 68, 0.08);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: Georgia, "Times New Roman", serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       line-height: 1.5;
     }
+    h1, h2 { font-family: Georgia, "Times New Roman", serif; }
     header {
       background: var(--navy);
       color: #fff;
@@ -46,7 +50,8 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.35);
+      box-shadow: 0 4px 20px rgba(15, 42, 68, 0.35);
+      border-bottom: 3px solid var(--gold);
     }
     .logo {
       display: flex;
@@ -57,35 +62,52 @@
     }
     .logo-icon {
       width: 28px; height: 28px;
-      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      background: var(--gold);
+      color: var(--navy);
       border-radius: 6px;
       display: grid;
       place-items: center;
       font-size: 14px;
+      font-weight: 700;
     }
+    .top-actions { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+    .btn-github {
+      background: transparent;
+      color: #fff;
+      border: 1px solid #fff;
+      border-radius: 9px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.78rem;
+      font-family: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-github:hover { background: #fff; color: var(--navy); }
     .badge {
-      background: var(--navy-light);
-      border: 1px solid #334155;
-      color: #94a3b8;
+      background: var(--navy2);
+      border: 1px solid rgba(201, 162, 39, 0.55);
+      color: #e6d9b8;
       font-size: 0.7rem;
       padding: 0.25rem 0.65rem;
       border-radius: 999px;
       font-weight: 500;
     }
     .hero {
-      background: var(--navy);
+      background: linear-gradient(135deg, var(--navy), var(--navy2));
       color: #fff;
       text-align: center;
       padding: 2.25rem 1.25rem 2.75rem;
+      border-bottom: 4px solid var(--gold);
     }
     .hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
       font-size: clamp(1.4rem, 3.8vw, 2rem);
       font-weight: 700;
       letter-spacing: -0.02em;
       margin-bottom: 0.55rem;
     }
     .hero p {
-      color: #94a3b8;
+      color: #cdd9e8;
       max-width: 640px;
       margin: 0 auto 1.1rem;
       font-size: 0.92rem;
@@ -101,18 +123,22 @@
     .card {
       background: var(--card);
       border-radius: var(--radius);
-      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+      box-shadow: var(--shadow);
       border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
       overflow: hidden;
     }
     .card-header {
       padding: 0.95rem 1.2rem;
       border-bottom: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
       display: flex;
       align-items: center;
       gap: 0.55rem;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.95rem;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--navy);
     }
     .card-header .icon {
       width: 22px; height: 22px;
@@ -125,6 +151,12 @@
     .icon-nbs { background: #dbeafe; color: #1d4ed8; }
     .icon-loc { background: #ecfdf5; color: #047857; }
     .card-body { padding: 1rem 1.2rem; }
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--navy);
+      border-left: 4px solid var(--gold);
+      padding-left: 0.6rem;
+    }
     .search-wrap { position: relative; margin-bottom: 0.75rem; }
     .search-wrap input {
       width: 100%;
@@ -138,8 +170,8 @@
     }
     .search-wrap input:focus {
       outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.22);
     }
     .search-wrap .search-icon {
       position: absolute;
@@ -184,8 +216,8 @@
       cursor: pointer;
       transition: background 0.12s;
     }
-    .result-item:hover, .result-item.selected { background: #eff6ff; }
-    .result-item.selected { border-left: 3px solid #3b82f6; }
+    .result-item:hover, .result-item.selected { background: var(--goldbg); }
+    .result-item.selected { border-left: 3px solid var(--gold); }
     .result-code {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.76rem;
@@ -293,12 +325,26 @@
       color: var(--muted);
       font-size: 0.88rem;
     }
-    footer {
-      text-align: center;
-      padding: 1.25rem;
-      color: var(--muted);
-      font-size: 0.78rem;
-    }
+    /* Rodapé padrão Hub Fiscal */
+    .footer{background:#0f2a44;color:#cdd9e8;margin-top:20px;border-top:4px solid #c9a227}
+    .footer strong{color:#fff}
+    .footer strong.ft{font-family:Georgia,"Times New Roman",serif}
+    .footer a{color:#fff}
+    .footer p{margin:0.5rem 0;font-size:0.82rem}
+    .footer-grid-wrap,.footer-base-wrap{max-width:1280px;margin:0 auto;padding-left:1.5rem;padding-right:1.5rem}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1.4fr;gap:20px;padding-top:26px;padding-bottom:10px}
+    .footer .donate-code{font-family:Consolas,monospace;font-size:12px;background:rgba(255,255,255,.1);padding:2px 6px;border-radius:6px;word-break:break-all}
+    .footer .reveal-link{color:#c9a227;font-size:12px}
+    .contact-icons{display:flex;gap:10px;margin-top:10px}
+    .contact-icons a{width:40px;height:40px;display:grid;place-items:center;border:1px solid #c9a227;border-radius:50%;color:#c9a227}
+    .contact-icons a:hover{background:#c9a227;color:#0f2a44}
+    .contact-icons svg{width:20px;height:20px}
+    .btn-outline-l{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:9px;padding:4px 8px;font-size:12px;margin-left:6px;cursor:pointer;font-family:inherit}
+    .btn-outline-l:hover{background:#fff;color:#0f2a44}
+    .footer-base{border-top:1px solid rgba(255,255,255,.15);padding-top:12px;padding-bottom:18px}
+    .footer-base small,.footer small{color:#9db1c7}
+    @media (max-width:768px){.footer-grid{grid-template-columns:1fr}}
+    @media print{.footer{display:none}}
     .note {
       font-size: 0.78rem;
       color: var(--muted);
@@ -411,7 +457,10 @@
       <div class="logo-icon">📊</div>
       <span>TaxReform | LC 116 × NBS</span>
     </div>
-    <span class="badge">Resolução CGSN 186/2026 &amp; LC 214/2025</span>
+    <div class="top-actions">
+      <span class="badge">Resolução CGSN 186/2026 &amp; LC 214/2025</span>
+      <a class="btn-github" href="https://github.com/silvioalbqrq" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
   </header>
 
   <section class="hero">
@@ -458,16 +507,35 @@
     </div>
   </main>
 
-  <footer>
-    Dados: LISTA.SERV.NAC (LC 116/2003), correlação NBS oficial (Anexo VIII — IBSCBS V1.00.00) · Local do ISS conforme art. 3º da LC 116/2003 (alterações LC 157/2016, LC 175/2020, LC 183/2021, LC 218/2025) · Uso informativo — confirme sempre a legislação municipal e a RFB
+  <footer class="footer">
+    <div class="footer-grid-wrap footer-grid">
+      <div>
+        <strong class="ft">LC 116 × NBS — Local do ISS</strong>
+        <p>Correlação LC 116/2003 → NBS com local do ISS e IBS/CBS. Ferramenta educacional — não substitui parecer técnico ou assessoria contábil.</p>
+      </div>
+      <div>
+        <strong class="ft">Contato</strong>
+        <div class="contact-icons">
+          <a href="mailto:silvio.albqrq@gmail.com" aria-label="E-mail silvio.albqrq@gmail.com" title="E-mail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h20v14H2z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m2 7 10 6L22 7" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+          <a href="https://wa.me/5585998206642?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LC%20116%20NBS" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +55 85 99820-6642" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.8 1.9.8 2c.1.1.1.3 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.8.3.2.5.1.7-.1l.8-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.6.3 0 .2 0 .7-.2 1.3Z" fill="currentColor"/></svg></a>
+          <a href="https://github.com/silvioalbqrq" target="_blank" rel="noopener noreferrer" aria-label="GitHub @silvioalbqrq" title="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 6.8 9.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.2-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 22 12 10 10 0 0 0 12 2Z" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <strong class="ft">Doações</strong>
+        <p>Pix: <code class="donate-code" id="pix-chave" data-full="8eea81fc-cb40-4150-91fa-6ca829ada37f" title="8eea81fc-cb40-4150-91fa-6ca829ada37f">8eea81fc…da37f</code> <button class="btn-outline-l" data-copy="pix-chave" type="button">Copiar</button><br><small><a href="#" data-reveal="pix-chave" class="reveal-link">ver chave completa</a></small></p>
+        <p>Lightning: <code class="donate-code" id="ln-address" data-full="lnbc1p4tt3ccpp5fntekr0ya4r4zd6durklrznte0zsg5jv3zcv83sss4u4efd8d7gsdqqcqzzsxqrrsssp5xg8m0ydtzqprnym2ruqp4260au726czc86p5y2mpl575mp8avdcs9qxpqysgqsjawffjrlkwpa77wf9zvsjx99z833h0dvjqjh0nxqph75rrkghrhzrfwdhj0fqt57l0nwl69c2sgutmm40mgzhkmqy9dpzcje69u09qpaewhvg" title="Invoice única — clique em copiar">lnbc1p4…paewhvg (invoice única)</code> <button class="btn-outline-l" data-copy="ln-address" type="button">Copiar</button><br><small><a href="#" data-reveal="ln-address" class="reveal-link">ver invoice completa</a></small></p>
+      </div>
+    </div>
+    <div class="footer-base-wrap footer-base"><small>© 2026 LC 116 × NBS · Bases: LC 116/2003, LC 214/2025 · Ferramenta educacional.</small></div>
   </footer>
 
-  <script src="nbs.js"></script>
-  <script src="lc116.js"></script>
-  <script src="correlacao.js"></script>
-  <script src="correlacao_patch.js"></script>
-  <script src="local_map.js"></script>
-  <script src="cclasstrib.js"></script>
-  <script src="app.js"></script>
+  <script src="nbs.js?v=20261008-03"></script>
+  <script src="lc116.js?v=20261008-03"></script>
+  <script src="correlacao.js?v=20261008-03"></script>
+  <script src="correlacao_patch.js?v=20261008-03"></script>
+  <script src="local_map.js?v=20261008-03"></script>
+  <script src="cclasstrib.js?v=20261008-03"></script>
+  <script src="app.js?v=20261008-03"></script>
 </body>
 </html>

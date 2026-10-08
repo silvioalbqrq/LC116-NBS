@@ -322,4 +322,31 @@
 
   // ------------------------- init -------------------------
   renderLc();
+
+  // ------------------------- rodapé Hub Fiscal: copiar/revelar doações -------------------------
+  Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.getAttribute('data-copy'));
+      var txt = el ? (el.getAttribute('data-full') || el.textContent) : '';
+      var done = function () {
+        var original = btn.textContent;
+        btn.textContent = 'Copiado!';
+        setTimeout(function () { btn.textContent = original; }, 1500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(done, function () {});
+      }
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-reveal]'), function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var el = document.getElementById(link.getAttribute('data-reveal'));
+      if (!el) return;
+      var full = el.getAttribute('data-full');
+      if (!full) return;
+      if (!el.getAttribute('data-short')) el.setAttribute('data-short', el.textContent);
+      el.textContent = (el.textContent === full) ? el.getAttribute('data-short') : full;
+    });
+  });
 })();

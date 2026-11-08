@@ -1,6 +1,6 @@
 # TaxReform | LC 116 × NBS
 
-Consulta estratégica de serviços do **Anexo da LC 116/2003 (ISSQN)** com a **correlação oficial à NBS** (Anexo VIII — IBSCBS V1.00.00), incluindo o **local de incidência do ISS** (art. 3º da LC 116) e o **local IBS/CBS** da reforma tributária.
+Consulta estratégica de serviços do **Anexo da LC 116/2003 (ISSQN)** com a **correlação oficial à NBS** (Anexo VIII — IBSCBS V1.02.00), incluindo o **local de incidência do ISS** (art. 3º da LC 116) e o **local IBS/CBS** da reforma tributária.
 
 ---
 
@@ -61,7 +61,7 @@ site/
 
 - **LISTA.SERV.NAC** — Anexo da LC 116/2003 (`lc116.js`): código de tributação nacional / item / subitem / desdobro.
 - **NBS 2.0** — Nomenclatura Brasileira de Serviços (`nbs.js`): códigos e descrições.
-- **Anexo VIII (IBSCBS V1.00.00)** — tabela oficial de correlação entre os itens da LC 116 e os códigos NBS, com **PS onerosa/ADQ exterior, INDOP, local de incidência IBS e classificação tributária (cClassTrib)**. Foi parseada para `correlacao.js`.
+- **Anexo VIII (IBSCBS V1.02.00)** — tabela oficial de correlação entre os itens da LC 116 e os códigos NBS, com **PS onerosa/ADQ exterior, INDOP, local de incidência IBS e classificação tributária (cClassTrib)**. Foi parseada para `correlacao.js` a partir da planilha oficial do Portal Nacional da NFS-e (26/10/2026).
 
 A correlação exibida é **oficial** (Anexo VIII), não heurística. A leitura do art. 3º é feita do texto consolidado da LC 116.
 
@@ -91,4 +91,4 @@ O arquivo `correlacao.js` pode ser regenerado a partir do Anexo VIII original (m
 node parse_anexo.js
 ```
 
-O script lê `AnexoVIII-CorrelacaoItemNBSIndOpCClassTrib_IBSCBS_V1.00.00.md`, agrupa os códigos NBS por subitem da LC 116 (tratando as linhas com `NaN` como continuidade do item), e monta os blocos/clusters de classificação tributária do anexo.
+Os dados são gerados a partir da planilha oficial `AnexoVIII-CorrelacaoItemNBSIndOpCClassTrib_IBSCBS_V1.02.00.xlsx` (Portal Nacional da NFS-e, 26/10/2026) via script `atualizar_anexo8.py` e convertidos para `correlacao.js`.

@@ -277,7 +277,7 @@
       desdros.map(function (d) { return '<span class="pill pill-code">' + esc(d.codigo.replace(/\.0$/, '')) + '</span>'; }).join(' ') +
       '</div>' : '';
 
-    const corrInfo = corr ? '<div class="correl-origem">📄 Correlação oficial — Anexo VIII (Resolução/Base IBSCBS V1.00.00), ' + Object.keys(corr.nbs).length + ' códigos NBS. cClassTrib por NBS (células mescladas preenchidas) + tabela cClassTrib 2026-06-22.</div>' : '';
+    const corrInfo = corr ? '<div class="correl-origem">📄 Correlação oficial — Anexo VIII (Resolução/Base IBSCBS V1.02.00), ' + Object.keys(corr.nbs).length + ' códigos NBS. cClassTrib por NBS (células mescladas preenchidas) + tabela cClassTrib 2026-06-22.</div>' : '';
 
     document.getElementById('detailContent').innerHTML =
       '<div class="selected-lc">' +

@@ -8,7 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
   <style>
     :root {
       --navy:#0b1f3a;--navy2:#12325c;
@@ -42,9 +47,8 @@
     .corp-inner{max-width:1420px;margin:0 auto;padding:0 20px}
     .corp-bar .corp-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:64px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
     .corp-brand{display:flex;gap:11px;align-items:center}
-    .corp-logo{width:36px;height:36px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;flex:none;box-shadow:0 6px 14px -6px rgba(11,31,58,.6)}
-    .corp-logo svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-    .corp-logo svg .hl{stroke:var(--emerald-light);stroke-width:2.2}
+    .corp-logo{width:36px;height:36px;flex:none;display:grid;place-items:center;box-shadow:0 6px 14px -6px rgba(11,31,58,.6);border-radius:10px;overflow:hidden}
+    .corp-logo img{width:36px;height:36px;display:block;border-radius:10px}
     .corp-brand strong{font-size:1rem;display:block;line-height:1.2;font-weight:800;letter-spacing:-.02em;color:var(--navy)}
     .corp-brand small{color:var(--muted);font-size:.66rem;font-weight:500;display:block;margin-top:2px}
     .corp-nav{display:flex;gap:10px;align-items:center}
@@ -97,10 +101,10 @@
     .result-meta{font-size:0.7rem;color:var(--muted);margin-top:0.18rem}
     .detail{display:none}
     .detail.visible{display:block}
-    .local-box{border-radius:10px;padding:1rem 1.15rem;margin-bottom:1rem;border:1px solid var(--line)}
-    .local-box.geral{background:var(--blue-soft);border-color:#bfdbfe}
-    .local-box.excecao{background:var(--emerald-soft);border-color:#bfead9}
-    .local-box.tomador{background:var(--amberbg);border-color:#fedf89}
+    .local-box{border-radius:10px;padding:1rem 1.15rem;margin-bottom:1rem;border:1px solid var(--line);background:var(--card)}
+    .local-box.geral{background:var(--card);border-color:var(--line);border-left:4px solid var(--blue)}
+    .local-box.excecao{background:var(--card);border-color:var(--line);border-left:4px solid var(--emerald)}
+    .local-box.tomador{background:var(--card);border-color:var(--line);border-left:4px solid var(--amber)}
     .local-box .label{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.3rem}
     .local-box.geral .label{color:var(--blue)}
     .local-box.excecao .label{color:var(--emerald)}
@@ -170,7 +174,7 @@
   <header class="corp-bar">
     <div class="corp-inner">
       <div class="corp-brand">
-        <div class="corp-logo" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="7" y="7" width="6" height="6" rx="1.5"/><rect x="19" y="7" width="6" height="6" rx="1.5"/><rect x="7" y="19" width="6" height="6" rx="1.5"/><rect class="hl" x="19" y="19" width="6" height="6" rx="1.5"/></svg></div>
+        <div class="corp-logo" aria-hidden="true"><img src="logo.svg" alt="" width="36" height="36"></div>
         <div>
           <strong>Consulta LC 116 → Serviços NBS</strong>
           <small>Local do ISS · Anexo VIII · IBS/CBS</small>
